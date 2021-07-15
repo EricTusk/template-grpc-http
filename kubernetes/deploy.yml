@@ -1,0 +1,61 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: template-grpc-http
+  namespace: default
+spec:
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 20%
+  replicas: 1
+  selector:
+    matchLabels:
+      app: template-grpc-http
+  template:
+    metadata:
+      labels:
+        app: template-grpc-http
+    spec:
+      nodeSelector:
+        node-1: "True"
+      imagePullSecrets:
+      - name: inner
+      dnsConfig:
+        options:
+          - name: timeout
+            value: "1"
+          - name: attempts
+            value: "1"
+          - name: single-request-reopen
+      containers:
+      - name: template-grpc-http
+        image: "registry.sensetime.com/viper/template-grpc-http:v0.1.0-xxxxxxx-amd64"
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 0.2
+            memory: 128Mi
+          limits:
+            cpu: 0.4
+            memory: 128Mi
+        command:
+          - /bin/sh
+          - -c
+          - "./template-grpc-http --config=/config/config.json --verbose"
+        ports:
+          - name: http
+            containerPort: 8081
+          - name: grpc
+            containerPort: 8082
+          - name: metrics
+            containerPort: 8083
+        volumeMounts:
+        - name: template-grpc-http-config
+          mountPath: /config/
+      volumes:
+      - name: template-grpc-http-config
+        configMap:
+          name: template-grpc-http-config

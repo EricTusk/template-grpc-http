@@ -48,7 +48,7 @@ func main() {
 
 	go func() {
 		if err := service.RunGRPCServer(cfg); err != nil {
-			logrus.Fatal("GRPC server start failed: ", err)
+			logrus.Fatalf("failed to run grpc server with error: %v", err)
 		}
 	}()
 

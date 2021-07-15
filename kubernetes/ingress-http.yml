@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: template-grpc-http-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: "kong-openapi"
+    configuration.konghq.com: https-strict-false
+    plugins.konghq.com: body-size-64m,api-log,api-block
+
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /engine/template-grpc-http/
+        backend:
+          serviceName: template-grpc-http-svc
+          servicePort: 8082

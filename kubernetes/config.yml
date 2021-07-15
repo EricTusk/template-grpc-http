@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: template-grpc-http-config
+  namespace: default
+data:
+  template-grpc-http.json: |-
+    {
+      "HTTPEndpoint": ":8081",
+      "GRPCEndpoint": ":8082",
+      "MetricsEndpoint": ":8083"
+    }

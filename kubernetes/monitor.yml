@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: template-grpc-http-monitor
+  labels:
+    k8s-app: template-grpc-http
+  namespace: monitoring
+spec:
+  jobLabel: k8s-app
+  selector:
+    matchLabels:
+      app: template-grpc-http
+  namespaceSelector:
+    matchNames:
+    - default
+  endpoints:
+  - interval: 30s
+    port: metrics
+    honorLabels: true

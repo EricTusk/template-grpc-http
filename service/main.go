@@ -47,7 +47,7 @@ func RunGRPCServer(cfg *worker.Config) error {
 	)
 	service, err := NewService()
 	if err != nil {
-		logrus.Errorln("RunGRPCServer(). Create service failed:", err)
+		logrus.Errorf("failed to new service with error: %v", err)
 		return err
 	}
 	api.RegisterTemplateHTTPGRPCServiceServer(grpcServer, service)
@@ -56,19 +56,19 @@ func RunGRPCServer(cfg *worker.Config) error {
 	grpcEndpoint := cfg.GRPCEndpoint
 	listener, err := net.Listen(network, grpcEndpoint)
 	if err != nil {
-		logrus.Errorf("RunGRPCServer(). Failed to listen %s: %v", grpcEndpoint, err)
+		logrus.Errorf("failed to listen %s with error: %v", grpcEndpoint, err)
 		return err
 	}
 	defer func() {
 		if err := listener.Close(); err != nil {
-			logrus.Errorf("RunGRPCServer(). Failed to close %s: %v", grpcEndpoint, err)
+			logrus.Errorf("failed to close %s with error %v", grpcEndpoint, err)
 		}
 		// grpcServer.GracefulStop()
 	}()
 
 	// Run grpc server
 	if err := grpcServer.Serve(listener); err != nil {
-		logrus.Fatalf("RunGRPCServer(). Failed to serve: %v", err)
+		logrus.Fatalf("failed to serve with error: %v", err)
 		return err
 	}
 
@@ -87,7 +87,7 @@ func RunHTTPServer(cfg *worker.Config) {
 		grpc.WithDefaultCallOptions(grpc.MaxCallRecvMsgSize(cfg.MaxMsgSize), grpc.MaxCallSendMsgSize(cfg.MaxMsgSize)),
 	}
 	if err := api.RegisterTemplateHTTPGRPCServiceHandlerFromEndpoint(ctx, mux, cfg.GRPCEndpoint, dialOptions); err != nil {
-		logrus.Fatal("RunHTTPServer(). register handler failed. ", err)
+		logrus.Fatalf("failed to register handler with error: %v", err)
 	}
 
 	http.Handle("/", mux)
@@ -97,13 +97,13 @@ func RunHTTPServer(cfg *worker.Config) {
 		}*/
 
 	if err := http.ListenAndServe(cfg.HTTPEndpoint, nil); err != nil {
-		logrus.Fatal("RunHTTPServer(). start HTTP server failed. ", err)
+		logrus.Fatalf("failed to listen with error: %v", err)
 	}
 }
 
 func RunMetricsServer(cfg *worker.Config) {
 	http.Handle("/metrics", promhttp.Handler())
 	if err := http.ListenAndServe(cfg.MetricsEndpoint, nil); err != nil {
-		logrus.Errorf("runMetricsServer(). Metric http server start failed: %+v", err)
+		logrus.Errorf("failed to run metrics server with error: %v", err)
 	}
 }
