@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package com.EricTusk.template_http_grpc;
+
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option go_package="github.com/EricTusk/template-http-grpc/api";
+option java_package="com.EricTusk.template_http_grpc";
+
+option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+    info: {
+        title: "template-http-grpc"
+        version: "v0.1.0"
+    };
+};
+
+message EchoInfo {
+    // 数值.
+    // [EN] Number to be printed.
+    float number = 1;
+    // 字符串.
+    // [EN] Sentence to be printed.
+    string sentence = 2;
+}
+
+message EchoRequest {
+    // 要被打印的参数.
+    // [EN] Parameters to be printed.
+    EchoInfo echo = 1;
+}
+
+message EchoResponse {
+    // 上一次打印的参数.
+    // [EN] Last printed parameters.
+    EchoInfo last_echo = 1;
+    // 当前打印的参数.
+    // [EN] Current printed parameters.
+    EchoInfo current_echo = 2;
+}
+
+// GetSystemInfoRequest表示获取系统信息请求.
+// [EN] GetSystemInfoRequest indicates a getting system information request.
+message GetSystemInfoRequest {
+}
+
+// GetSystemInfoResponse表示获取系统信息响应.
+// [EN] GetSystemInfoResponse indicates a getting system information response.
+message GetSystemInfoResponse {
+    // 信息.
+    // [EN] Info.
+    string info = 1;
+}
+
+// TemplateHTTPGRPCService为模板服务.
+// [EN] TemplateHTTPGRPCService is a service for http and grpc template.
+service TemplateHTTPGRPCService {
+    // 根据传入的参数进行配置更新.
+    // [EN] The configuration is updated according to the parameters.
+    rpc Echo(EchoRequest) returns (EchoResponse) {
+        option (google.api.http) = {
+            post: "/v1/echo"
+            body: "*"
+        };
+    };
+
+    // 获取状态信息.
+    // [EN] Get status information.
+    rpc GetSystemInfo(GetSystemInfoRequest) returns (GetSystemInfoResponse) {
+        option (google.api.http) = {
+            get: "/v1/get_system_info"
+        };
+    };
+}

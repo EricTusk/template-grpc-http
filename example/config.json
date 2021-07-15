@@ -1,0 +1,5 @@
+{
+  "HTTPEndpoint": ":8881",
+  "GRPCEndpoint": ":8882",
+  "MetricsEndpoint": ":8883"
+}

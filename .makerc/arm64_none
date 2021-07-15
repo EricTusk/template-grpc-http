@@ -1,0 +1,5 @@
+baseBuilderImage=golang:1.15.11-gomod-cuda10-gcc49
+baseImage=centos:7-arm64
+
+arch=arm64
+device=none

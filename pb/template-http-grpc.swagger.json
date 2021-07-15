@@ -1,0 +1,111 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "template-http-grpc",
+    "version": "v0.1.0"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/echo": {
+      "post": {
+        "summary": "根据传入的参数进行配置更新.\n[EN] The configuration is updated according to the parameters.",
+        "operationId": "Echo",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/template_http_grpcEchoResponse"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/template_http_grpcEchoRequest"
+            }
+          }
+        ],
+        "tags": [
+          "TemplateHTTPGRPCService"
+        ]
+      }
+    },
+    "/v1/get_system_info": {
+      "get": {
+        "summary": "获取状态信息.\n[EN] Get status information.",
+        "operationId": "GetSystemInfo",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/template_http_grpcGetSystemInfoResponse"
+            }
+          }
+        },
+        "tags": [
+          "TemplateHTTPGRPCService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "template_http_grpcEchoInfo": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "number",
+          "format": "float",
+          "description": "数值.\n[EN] Number to be printed."
+        },
+        "sentence": {
+          "type": "string",
+          "description": "字符串.\n[EN] Sentence to be printed."
+        }
+      }
+    },
+    "template_http_grpcEchoRequest": {
+      "type": "object",
+      "properties": {
+        "echo": {
+          "$ref": "#/definitions/template_http_grpcEchoInfo",
+          "description": "要被打印的参数.\n[EN] Parameters to be printed."
+        }
+      }
+    },
+    "template_http_grpcEchoResponse": {
+      "type": "object",
+      "properties": {
+        "last_echo": {
+          "$ref": "#/definitions/template_http_grpcEchoInfo",
+          "description": "上一次打印的参数.\n[EN] Last printed parameters."
+        },
+        "current_echo": {
+          "$ref": "#/definitions/template_http_grpcEchoInfo",
+          "description": "当前打印的参数.\n[EN] Current printed parameters."
+        }
+      }
+    },
+    "template_http_grpcGetSystemInfoResponse": {
+      "type": "object",
+      "properties": {
+        "info": {
+          "type": "string",
+          "description": "信息.\n[EN] Info."
+        }
+      },
+      "description": "GetSystemInfoResponse表示获取系统信息响应.\n[EN] GetSystemInfoResponse indicates a getting system information response."
+    }
+  }
+}
