@@ -39,8 +39,8 @@ make image
 
 ## 3 使用
 
+<a id="jump-local"></a>
 ### 3.1 在本地使用
-<span id = "jump-local"></span>
 
 1. 查看版本, 命令如下:
 ```bash
@@ -57,8 +57,8 @@ make image
 ./template-http-grpc --verbose
 ```
 
+<a id="jump-container"></a>
 ### 3.2 在容器中使用
-<span id = "jump-container"></span>
 
 首先进入容器中, 命令如下:
 ```bash
@@ -80,8 +80,29 @@ docker run --name template-http-grpc -it template-http-grpc:v0.1.0-xxxxxxx-amd64
 ./template-http-grpc --config=/config/config.json --verbose
 ```
 
+### 3.3 接口
+
+1. echo
+
+```bash
+curl -XPOST "http://localhost:8881/v1/echo" -H 'Content-type:application/json' -d '{ "echo": {"number": 2021, "sentence": "sentence 2"} }' | jq .
+```
+
+2. get_system_info
+
+```bash
+curl -XGET "http://lcoalhost:8881/v1/get_system_info" | jq .
+```
+
+### 3.4 监控指标
+
+在浏览器输入url即可查看到监控指标, 如下地址:
+```bash
+http://localhost:8883/metrics
+```
+
+<a id="jump-image"></a>
 ## 4 镜像说明
-<span id = "jump-image"></span>
 
 * centos.7-amd64.tar: centos镜像
 * debian.stretch.tar: debian镜像
