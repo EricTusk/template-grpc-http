@@ -9,7 +9,6 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
 	github.com/onrik/logrus v0.9.0
 	github.com/prometheus/client_golang v1.11.0
-	github.com/prometheus/common v0.26.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/tidwall/gjson v1.8.1 // indirect
