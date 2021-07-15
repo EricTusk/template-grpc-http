@@ -1,24 +1,55 @@
 run:
-    build-tags:
-        - nolic
-
-    tests: true
-
     skip-dirs:
-        - api
-        - test
+    - api
+    - test
+    - service
 
-    linters:
-        presets:
-            - bugs
-            - unused
-            - format
-            - style
-        disable:
-            - unparam
-        disable:
-            - gochecknoglobals
-            - gochecknoinits
-            - gocritic
-            - lll
-            - unparam
+linters:
+    presets:
+    - bugs
+    - unused
+    - format
+    - style
+
+    disable:
+    - unparam
+    - gochecknoglobals
+    - gochecknoinits
+    - gocritic
+    - lll
+    - gosec
+    - dupl
+    - unparam
+    - wrapcheck
+    - gomnd
+    - godox
+    - testpackage
+    - stylecheck
+    - thelper
+    - paralleltest
+    - ifshort
+    - goerr113
+    - nlreturn
+    - exhaustivestruct
+    - errorlint
+    - wsl
+    - revive
+    - exhaustive
+    - promlinter
+    - forbidigo
+    - whitespace
+    - nakedret
+    - gofumpt
+    - dogsled
+    - nolintlint
+    - forcetypeassert
+    - makezero
+    - godot
+    - gci
+    - wastedassign
+    - interfacer
+    - scopelint
+    - golint
+    - gomodguard
+    - gomoddirectives
+    - noctx
