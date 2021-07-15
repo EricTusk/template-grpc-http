@@ -1,0 +1,9 @@
+*.swp
+*.swo
+*.log
+/.vscode/
+debug
+/template-http-grpc
+/images/
+.idea
+.DS_Store
